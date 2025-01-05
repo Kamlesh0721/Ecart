@@ -1,11 +1,13 @@
 import React from "react";
-import NavigationMenu from "./components/NavigationMenu";
-import Home from "./pages/Home";
+import NavigationMenu from "./user/components/NavigationMenu";
+import Home from "./user/pages/Home";
+import Footer from "./user/components/footer/Footer";
 function App() {
   return (
     <>
       <NavigationMenu />
       <Home />
+      <Footer />
     </>
   );
 }

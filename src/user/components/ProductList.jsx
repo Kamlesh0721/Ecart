@@ -1,8 +1,8 @@
 import { React, useContext, useEffect, useState } from "react";
-import AppContext from "../context/Context";
+import AppContext from "../../context/Context";
 import { Grid } from "@mui/material";
 import ProductCard from "./ProductCard";
-import axios from "../axios";
+import axios from "../../axios";
 
 const ProductList = () => {
   const { data, isError, refreshData } = useContext(AppContext);

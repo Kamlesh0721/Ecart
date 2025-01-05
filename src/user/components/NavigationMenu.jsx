@@ -3,7 +3,7 @@ import { AppBar, Toolbar, Box, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 // Import NavbarStyles
-import { NavbarStyles } from "../styles/NavbarStyles";
+import { NavbarStyles } from "../../styles/NavbarStyles";
 
 // Icons
 import HouseIcon from "@mui/icons-material/House";

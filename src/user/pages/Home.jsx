@@ -2,11 +2,7 @@ import React from "react";
 import ProductList from "../components/ProductList";
 
 function Home() {
-  return (
-    <>
-      <ProductList />
-    </>
-  );
+  return <>Home</>;
 }
 
 export default Home;
