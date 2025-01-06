@@ -1,8 +1,19 @@
 import React from "react";
-import ProductList from "../components/ProductList";
-
+import MainCarousel from "../components/home/MainCarousel";
+import CategoryCarousel from "../components/home/CategoryCarousel";
+import { categoryData } from "../../data/categoryData";
 function Home() {
-  return <>Home</>;
+  return (
+    <>
+      <main>
+        <MainCarousel />
+        <CategoryCarousel
+          products={categoryData.mensKurta}
+          category={"Men's Kurta"}
+        />
+      </main>
+    </>
+  );
 }
 
 export default Home;
