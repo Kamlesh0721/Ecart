@@ -1,15 +1,5 @@
 import React from "react";
-import NavigationMenu from "./user/components/NavigationMenu";
-import Home from "./user/pages/Home";
-import Footer from "./user/components/footer/Footer";
 function App() {
-  return (
-    <>
-      <NavigationMenu />
-      <Home />
-      <Footer />
-    </>
-  );
+  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
 }
-
 export default App;
