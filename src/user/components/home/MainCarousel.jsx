@@ -2,7 +2,7 @@ import React from "react";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import { mainCarouseData } from "../../../data/mainCarouselData";
-
+import Slider from "react-slick";
 const items = mainCarouseData.map((item, index) => {
   const style = { height: 300 };
   return (
@@ -10,21 +10,26 @@ const items = mainCarouseData.map((item, index) => {
       className={`image${index}`}
       style={style}
       src={item.imgUrl}
-      atl={item.imgDesc}
+      alt={item.imgDesc}
     />
   );
 });
 
 const MainCarousel = () => {
+  const settings = {
+    dots: true,
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    speed: 2000,
+    autoplay: true,
+    autoplaySpeed: 4000,
+  };
   return (
     <>
-      <AliceCarousel
-        disableButtonsControls
-        autoPlay
-        animationDuration={3000}
-        infinite
-        items={items}
-      />
+      <div className="slider-container">
+        <Slider {...settings}>{...items}</Slider>
+      </div>
     </>
   );
 };

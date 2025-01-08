@@ -1,5 +1,5 @@
 "use client";
-
+import ProductList from "../components/home/ProductList";
 import { useState } from "react";
 import {
   Dialog,
@@ -21,22 +21,15 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
   { name: "Price: Low to High", href: "#", current: false },
   { name: "Price: High to Low", href: "#", current: false },
 ];
-const subCategories = [
-  { name: "Totes", href: "#" },
-  { name: "Backpacks", href: "#" },
-  { name: "Travel Bags", href: "#" },
-  { name: "Hip Bags", href: "#" },
-  { name: "Laptop Sleeves", href: "#" },
-];
-const filters = [
+
+// Filters for multiple select
+const filtersMS = [
   {
     id: "color",
     name: "Color",
@@ -73,14 +66,81 @@ const filters = [
     ],
   },
 ];
+// Filters for single select
+const filtersSS = [
+  {
+    id: "price",
+    name: "Price",
+    options: [
+      { value: "0-149", label: "₹0 - ₹149" },
+      { value: "150-399", label: "₹150 - ₹399" },
+      { value: "400-699", label: "₹400 - ₹699" },
+      { value: "700-999", label: "₹700 - ₹999" },
+      { value: "1000-1999", label: "₹1000 - ₹1999" },
+      { value: "2000-2999", label: "₹2000 - ₹2999" },
+      { value: "3000-4999", label: "₹3000 - ₹4999" },
+      { value: "5000-9999", label: "₹5000 - ₹9999" },
+    ],
+  },
+  {
+    id: "discountRange",
+    name: "Discount Range",
+    options: [
+      { value: "10", label: "10% and above" },
+      { value: "20", label: "20% and above" },
+      { value: "30", label: "30% and above" },
+      { value: "40", label: "40% and above" },
+      { value: "50", label: "50% and above" },
+      { value: "60", label: "60% and above" },
+      { value: "70", label: "70% and above" },
+      { value: "80", label: "80% and above" },
+    ],
+  },
+  {
+    id: "availability",
+    name: "Availability",
+    options: [
+      { value: "in_stock", label: "In Stock" },
+      { value: "out_of_stock", label: "Out Of Stock" },
+    ],
+  },
+];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
+export default function CategoryFilter() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
+  const location = useLocation();
+  const navigate = useNavigate();
+  const handleFilter = (value, sectionId) => {
+    const searchParams = new URLSearchParams(location.search);
+    let filterValue = searchParams.getAll(sectionId);
+    if (
+      filterValue.length > 0 &&
+      filterValue[0].split(",").filter((item) => item !== value)
+    );
+    if (filterValue.length === 0) {
+      searchParams.delete(sectionId);
+    } else {
+      filterValue.push;
+    }
+
+    if (filterValue.length >= 0) {
+      searchParams.set(sectionId, filterValue.join(","));
+      const querry = searchParams.toString();
+      navigate({ search: `?${querry}` });
+    }
+  };
+
+  const handleFilterSS = (e, sectionId) => {
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set(sectionId, e.target.value);
+    const querry = searchParams.toString();
+    navigate({ search: `?${querry}` });
+  };
   return (
     <div className="bg-white">
       <div>
@@ -114,18 +174,7 @@ export default function Example() {
 
               {/* Filters */}
               <form className="mt-4 border-t border-gray-200">
-                <h3 className="sr-only">Categories</h3>
-                <ul role="list" className="px-2 py-3 font-medium text-gray-900">
-                  {subCategories.map((category) => (
-                    <li key={category.name}>
-                      <a href={category.href} className="block px-2 py-3">
-                        {category.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-
-                {filters.map((section) => (
+                {filtersMS.map((section) => (
                   <Disclosure
                     key={section.id}
                     as="div"
@@ -155,6 +204,9 @@ export default function Example() {
                             <div className="flex h-5 shrink-0 items-center">
                               <div className="group grid size-4 grid-cols-1">
                                 <input
+                                  onChange={() =>
+                                    handleFilter(option.value, section.id)
+                                  }
                                   defaultValue={option.value}
                                   id={`filter-mobile-${section.id}-${optionIdx}`}
                                   name={`${section.id}[]`}
@@ -268,19 +320,7 @@ export default function Example() {
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {/* Filters */}
               <form className="hidden lg:block">
-                <h3 className="sr-only">Categories</h3>
-                <ul
-                  role="list"
-                  className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"
-                >
-                  {subCategories.map((category) => (
-                    <li key={category.name}>
-                      <a href={category.href}>{category.name}</a>
-                    </li>
-                  ))}
-                </ul>
-
-                {filters.map((section) => (
+                {filtersMS.map((section) => (
                   <Disclosure
                     key={section.id}
                     as="div"
@@ -310,6 +350,9 @@ export default function Example() {
                             <div className="flex h-5 shrink-0 items-center">
                               <div className="group grid size-4 grid-cols-1">
                                 <input
+                                  onChange={() =>
+                                    handleFilter(option.value, section.id)
+                                  }
                                   defaultValue={option.value}
                                   defaultChecked={option.checked}
                                   id={`filter-${section.id}-${optionIdx}`}
@@ -351,10 +394,83 @@ export default function Example() {
                     </DisclosurePanel>
                   </Disclosure>
                 ))}
+                {filtersSS.map((section) => (
+                  <Disclosure
+                    key={section.id}
+                    as="div"
+                    className="border-t border-gray-200 px-4 py-6"
+                  >
+                    <h3 className="-mx-2 -my-3 flow-root">
+                      <DisclosureButton className="group flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
+                        <span className="font-medium text-gray-900">
+                          {section.name}
+                        </span>
+                        <span className="ml-6 flex items-center">
+                          <PlusIcon
+                            aria-hidden="true"
+                            className="size-5 group-data-[open]:hidden"
+                          />
+                          <MinusIcon
+                            aria-hidden="true"
+                            className="size-5 group-[&:not([data-open])]:hidden"
+                          />
+                        </span>
+                      </DisclosureButton>
+                    </h3>
+                    <DisclosurePanel className="pt-6">
+                      <div className="space-y-6">
+                        {section.options.map((option, optionIdx) => (
+                          <div key={option.value} className="flex gap-3">
+                            <div className="flex h-5 shrink-0 items-center">
+                              <div className="group grid size-4 grid-cols-1">
+                                <input
+                                  onChange={() => handleFilterSS(e, section.id)}
+                                  defaultValue={option.value}
+                                  id={`filter-mobile-${section.id}-${optionIdx}`}
+                                  name={`${section.id}[]`}
+                                  type="radio"
+                                  className="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
+                                />
+                                <svg
+                                  fill="none"
+                                  viewBox="0 0 14 14"
+                                  className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-[:disabled]:stroke-gray-950/25"
+                                >
+                                  <path
+                                    d="M3 8L6 11L11 3.5"
+                                    strokeWidth={2}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className="opacity-0 group-has-[:checked]:opacity-100"
+                                  />
+                                  <path
+                                    d="M3 7H11"
+                                    strokeWidth={2}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className="opacity-0 group-has-[:indeterminate]:opacity-100"
+                                  />
+                                </svg>
+                              </div>
+                            </div>
+                            <label
+                              htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
+                              className="min-w-0 flex-1 text-gray-500"
+                            >
+                              {option.label}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    </DisclosurePanel>
+                  </Disclosure>
+                ))}
               </form>
 
               {/* Product grid */}
-              <div className="lg:col-span-3">{/* Your content */}</div>
+              <div className="lg:col-span-3">
+                <ProductList />
+              </div>
             </div>
           </section>
         </main>

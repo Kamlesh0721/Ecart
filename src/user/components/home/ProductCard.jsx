@@ -16,7 +16,7 @@ const ProductCard = ({ product }) => {
             component="img"
             height="280"
             image={product.image}
-            alt="green iguana"
+            alt={product.name || "product image"}
           />
           <CardContent sx={{ padding: 0 }}>
             <Typography gutterBottom variant="h5" component="div">
