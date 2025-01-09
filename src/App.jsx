@@ -5,6 +5,7 @@ import CategoryFilter from "./user/pages/CategoryFilter";
 import Footer from "./user/components/footer/Footer";
 import ProductDetails from "./user/pages/ProductDetails";
 import Cart from "./user/components/cart/Cart";
+import Checkout from "./user/pages/Checkout";
 function App() {
   return (
     <>
@@ -14,7 +15,8 @@ function App() {
 
       <Footer />
       <ProductDetails /> */}
-      <Cart />
+      {/* <Cart /> */}
+      <Checkout />
     </>
   );
 }
