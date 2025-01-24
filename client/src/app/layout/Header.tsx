@@ -31,7 +31,6 @@ const navStyles = {
     color: "text.secondary",
   },
 };
-
 interface Props {
   darkMode: boolean;
   handleThemeChange: () => void;
@@ -55,6 +54,7 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
             {darkMode ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
         </Box>
+
         <List sx={{ display: "flex" }}>
           {navLinks.map(({ title, path }) => (
             <ListItem component={NavLink} to={path} key={path} sx={navStyles}>
